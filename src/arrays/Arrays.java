@@ -1,5 +1,11 @@
 package arrays;
 
+import dao.impl.CoursDaoImpl;
+import dao.impl.StudentDaoImpl;
+import dao.intf.CoursDao;
+import dao.intf.StudentDao;
+import model.Cours;
+import model.Etudiant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,8 +20,11 @@ public class Arrays {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        List<Etudiant> etudiantList = initialStudents();
-        List<Cours> coursList = initialCourses();
+        //List<Etudiant> etudiantList = initialStudents();
+        //List<Cours> coursList = initialCourses();
+
+        StudentDao studentDao = new StudentDaoImpl();
+        CoursDao coursDao = new CoursDaoImpl();
 
         String continueMenu = "y";
 
@@ -25,13 +34,16 @@ public class Arrays {
             switch (choix) {
                 case 1:
                     Etudiant newStudent = createNewStudent();
-                    etudiantList.add(newStudent);
+                    studentDao.add(newStudent);
+                    //etudiantList.add(newStudent);
                     System.out.println("New student saved succefully");
 
                     continueMenu = isContinue();
 
                     break;
                 case 2:
+                    List<Etudiant> etudiantList = studentDao.findAll();
+
                     for (Etudiant etudiant : etudiantList) {
                         System.out.println(etudiant.showInfo());
                     }
@@ -41,13 +53,16 @@ public class Arrays {
                     break;
                 case 3:
                     Cours newCours = createNewCours();
-                    coursList.add(newCours);
+                    //coursList.add(newCours);
+                    coursDao.addCours(newCours);
                     System.out.println("New cours saved succefully");
 
                     continueMenu = isContinue();
 
                     break;
                 case 4:
+                    List<Cours> coursList = coursDao.findAll();
+
                     for (Cours cours : coursList) {
                         System.out.println(cours.showInfo());
                     }
@@ -66,28 +81,6 @@ public class Arrays {
 
         } while (continueMenu.equals("y"));
 
-    }
-
-    public static List<Etudiant> initialStudents() {
-        List<Etudiant> etudiantList = new ArrayList<>();
-        etudiantList.add(new Etudiant("Priscilla", "Rocha", "F"));
-        etudiantList.add(new Etudiant("Gustavo", "Martins", "M"));
-        etudiantList.add(new Etudiant("Viviane", "Motta", "F"));
-        etudiantList.add(new Etudiant("Carlos", "Machado", "M"));
-        etudiantList.add(new Etudiant("Tais", "Archanjo", "F"));
-
-        return etudiantList;
-    }
-
-    public static List<Cours> initialCourses() {
-        List<Cours> coursList = new ArrayList<>();
-        coursList.add(new Cours(1, "Mathematic"));
-        coursList.add(new Cours(2, "French"));
-        coursList.add(new Cours(3, "English"));
-        coursList.add(new Cours(4, "Java"));
-        coursList.add(new Cours(5, "Python"));
-
-        return coursList;
     }
 
     public static Integer showMenu() {

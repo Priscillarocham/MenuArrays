@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Arrays_menu">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/Arrays_menu.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
